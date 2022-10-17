@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import questions from '@/data/questions'
+import scores from '@/data/scores'
 
 export default createStore({
   state: {
@@ -7,7 +8,8 @@ export default createStore({
     userScore: 0,
     questionListSorted: questions.sort(() => Math.random() - 0.5),
     optionSelected: null,
-    userAnswers: []
+    userAnswers: [],
+    scoreList: scores
   },
   getters: {
   },
@@ -29,6 +31,9 @@ export default createStore({
     },
     UPDATE_USERANSWERS (state, payload) {
       state.userAnswers = payload
+    },
+    UPDATE_SCORES (state, payload) {
+      state.scoreList = payload
     }
   },
   actions: {
