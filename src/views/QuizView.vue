@@ -17,7 +17,7 @@
           </div>
           <div v-else class="col-sm-6 col-12 d-grid">
             <router-link to="/final-score">
-              <button class="btn btn-outline-light m-3" @click="onNext(questionList[count].question, optionSelected)"> Submit </button>
+              <button id="submitButton" ref="submitButton" class="btn btn-outline-light m-3" @click="onNext(questionList[count].question, optionSelected)"> Submit </button>
             </router-link>
           </div>
         </div>
@@ -43,7 +43,6 @@ export default {
     return {
       userAnswers: [],
       answeredQuestion: ''
-
     }
   },
   computed: {
@@ -59,9 +58,11 @@ export default {
   setup () {
     const count = computed(() => store.state.count)
     const userScore = computed(() => store.state.userScore)
+    const scoreList = computed(() => store.state.scoreList)
     const questionList = computed(() => store.state.questionListSorted)
 
     return {
+      scoreList,
       questionList,
       count,
       userScore,
@@ -73,8 +74,10 @@ export default {
   },
   methods: {
     onNext (question, opSelected) {
-      this.userAnswers.push({ question, opSelected })
-      store.commit('UPDATE_USERANSWERS', this.userAnswers)
+      const userName = 'You'
+      const score = this.userScore
+      const submitButton = document.getElementById('submitButton')
+      let answerEvaluation = ''
 
       this.incrementCount()
 
@@ -82,15 +85,25 @@ export default {
         if (e.question === question) {
           if (e.answer === opSelected) {
             this.incrementScore()
+            answerEvaluation = 'Right'
+          } else if (opSelected === null) {
+            answerEvaluation = 'Skipped'
+          } else {
+            answerEvaluation = 'Wrong'
           }
         }
         return e.question
       })
 
+      this.userAnswers.push({ question, opSelected, answerEvaluation })
+      store.commit('UPDATE_USERANSWERS', this.userAnswers)
+
       this.optionSelected = null
 
-      // this.buttonText = (this.questionList.length - 1) === this.count ? 'Submit' : 'Next'
-      console.log('userScore: ' + this.userScore)
+      if (submitButton !== null) {
+        this.scoreList.push({ username: userName, score: score })
+        store.commit('UPDATE_SCORES', this.scoreList)
+      }
     },
     onBack () {
       this.decrementCount()
@@ -108,8 +121,6 @@ export default {
       store.commit('UPDATE_USERANSWERS', this.userAnswers)
 
       this.optionSelected = null
-
-      console.log('userScore: ' + this.userScore)
     }
 
   }
