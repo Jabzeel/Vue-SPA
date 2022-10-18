@@ -1,24 +1,34 @@
 <template>
   <AppHeader/>
   <app-background>
-    <div class="container-sm quiz-container rounded">
-      <div class="container quiz-content">
-        <div class="row">
-          <div class="col-12 text-start pt-3 text-white">
-            <app-question/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 col-12 d-grid">
-            <button v-if="count > 0 && count < 5" class="btn btn-outline-light m-3" @click="onBack()"> Back </button>
-          </div>
-          <div v-if="count < 4" class="col-sm-6 col-12 d-grid">
-            <button class="btn btn-outline-light m-3" @click="onNext(questionList[count].question, optionSelected)"> Next </button>
-          </div>
-          <div v-else class="col-sm-6 col-12 d-grid">
-            <router-link to="/final-score">
-              <button id="submitButton" ref="submitButton" class="btn btn-outline-light m-3" @click="onNext(questionList[count].question, optionSelected)"> Submit </button>
-            </router-link>
+    <div class="container">
+      <div class="row align-items-center quiz-row">
+        <div class="col-12 mt-5">
+          <div class="card text-center quiz-card">
+            <div class="card-body quiz-card-body">
+              <div class="row">
+                <div class="col-12 text-start pt-3 text-white">
+                  <app-question/>
+                </div>
+              </div>
+              <div class="row justify-content-center mt-5 mb-4">
+                <div class="col-lg-3 col-sm-6 col-12 d-grid btn-back">
+                  <button v-if="count > 0 && count < 5" class="btn btn-quiz" @click="onBack()"> Back </button>
+                </div>
+                <div v-if="count < 4" class="offset-lg-6 col-lg-3 col-sm-6 col-12 d-grid">
+                  <button class="btn btn-quiz" @click="onNext(questionList[count].question, optionSelected)"> Next </button>
+                </div>
+                <div v-else class="offset-lg-6 col-lg-3 col-sm-6 col-12 d-grid">
+                  <router-link
+                    to="/final-score"
+                    id="submitButton"
+                    class="btn btn-quiz"
+                    @click="onNext(questionList[count].question, optionSelected)">
+                      Submit
+                  </router-link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -128,34 +138,53 @@ export default {
 </script>
 
 <style lang="scss">
-.quiz-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap');
+
+.quiz-row {
+  height: 100vh;
 }
 
-.quiz-container::before{
-    content: "";
+.quiz-card {
     background-color: #d58298;
-    opacity: 50%;
-    position: absolute;
-    width: 100%;
-    height: 70vh;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 25px;
+    opacity: 90%;
   }
 
-.quiz-content {
-  position: absolute;
-  top: -200px;
+.quiz-card-body {
+  font-family: 'Oswald', sans-serif;
 
-  .row{
+  .row {
     padding: 0;
     margin: 0;
   }
+}
 
+.btn-quiz {
+  background-color: #b14773;
+  color: white;
+}
+
+.btn-quiz:hover {
+  background-color: #043562;
+  color: white;
+}
+
+@media only screen and (max-width: 575px) {
+  .btn-back {
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .bg-text-centered {
+    font-size: 20px;
+
+    h1 {
+      font-size: 140px;
+    }
+
+    button {
+      font-size: 22px;
+    }
+  }
 }
 </style>
