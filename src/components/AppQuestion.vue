@@ -4,24 +4,24 @@
     <h4 >
         {{ questionList[count].question }}
     </h4>
-    <fieldset v-if="count < 5" class="container" role="group" aria-label="Options">
-      <div v-for="(option, i) in questionList[count].options" :key="i" class="m-3">
+    <div v-if="count < 5" class="row" role="group" aria-label="Options">
+      <div v-for="(option, i) in questionList[count].options" :key="i" class="col-6 col-sm-3 d-grid mt-3">
         <input
           type="radio"
-          class=""
+          class="btn-check"
           :name="'radio-group' + (count + 1)"
           :id="'radio' + (i + 1)"
           :value="option"
           v-model="optionSelected"
         >
         <label
-          class="ps-2"
+          class="btn btn-outline-light"
           v-bind:for="'radio' + (i + 1)"
         >
           {{ option }}
         </label>
       </div>
-    </fieldset>
+    </div>
   </div>
 </template>
 
@@ -61,7 +61,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-</style>

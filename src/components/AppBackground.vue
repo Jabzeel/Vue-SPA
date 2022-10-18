@@ -7,7 +7,7 @@
 <style lang="scss">
 .bg-front-img {
   position: relative;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background: url(@/assets/frontImg.jpg) center;
   background-size: cover;

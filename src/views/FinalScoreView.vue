@@ -1,28 +1,36 @@
 <template>
   <AppHeader />
   <app-background>
-    <div class="container">
+    <div class="container score-container">
       <div class="row justify-content-center score-row">
         <div class="col-12">
           <div class="card text-center">
             <div class="card-body">
-              <h1 v-if="finalScore < 60" class="text-uppercase pt-2 pb-1"> Sorry, You Fail the Test </h1>
-              <h1 v-else class="text-uppercase pt-2 pb-1"> Congratulations, You Passed! </h1>
-              <h2 class="pb-2"> Here your score: {{ userScore }} / 5 </h2>
+              <div class="row">
+                <div class="col-12">
+                  <h1 v-if="finalScore < 60" class="text-uppercase pt-2 pb-1"> Oh no!<br/>You Fail the Test </h1>
+                  <h1 v-else class="text-uppercase pt-2 pb-1"> Congratulations!<br/>You Passed </h1>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <h2 class="pb-2"> Here your score: <span style="color: #043562">{{ userScore }}</span> / 5 </h2>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row justify-content-center mt-4">
-        <div class="col-5">
+      <div class="row justify-content-center mt-4 pb-5">
+        <div class="col-12 col-lg-4 col-xl-5">
           <div class="card text-center ">
             <div class="card-body">
               <PieChart />
             </div>
           </div>
         </div>
-        <div class="col-7">
-          <div class="card text-center ">
+        <div class="col-12 col-lg-8 col-xl-7 xt-chart-col">
+          <div class="card text-center">
             <div class="card-body">
               <XYChart/>
             </div>
@@ -66,7 +74,51 @@ export default {
 </script>
 
 <style lang="scss">
-.score-row {
-  padding-top: 75px;
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap');
+
+.score-container {
+  font-family: 'Oswald', sans-serif;
+
+  .score-row {
+    padding-top: 75px;
+  }
+
+  h2 {
+    color: #b14773;
+  }
+
+  .xt-chart-col{
+    margin-top: 15px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .score-container {
+    font-family: 'Oswald', sans-serif;
+
+    .score-row {
+      padding-top: 75px;
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+
+    h2 {
+      color: #b14773;
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .score-container {
+    h1 {
+      font-size: 40px;
+    }
+
+    .xt-chart-col{
+      margin-top: 0;
+    }
+  }
 }
 </style>
